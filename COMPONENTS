@@ -1,0 +1,76 @@
+2.2	Components
+
+The network design for the project incorporates the following devices:
+For a network design focused on traffic optimization and reducing congestion in high-density networks, here's a breakdown of key components:
+
+1. Routers and Switches: These form the backbone of the network, forwarding data between different segments. Efficient routing algorithms and fast switches are crucial to handle high traffic loads.
+
+2. Load Balancers: They distribute traffic across multiple servers or paths to avoid overloading any single device. Load balancing is especially important in reducing congestion during high traffic periods.
+
+3. Traffic Management Systems: These include techniques like:
+   - Traffic Shaping: Managing data flows to ensure more critical traffic gets priority.
+   - Quality of Service (QoS): Assigning different priority levels to different types of traffic (e.g., video streaming vs. general browsing) to prevent congestion from affecting high-priority services.
+
+4. Multiple Paths/Redundancy: To avoid bottlenecks, networks should have multiple paths for traffic to flow. In case one path gets congested, data can reroute through an alternative path.
+
+5. Congestion Management Tools:
+   - Congestion Control Protocols: Protocols like TCP congestion control manage traffic flow to prevent packet loss and reduce delays.
+   - Traffic Rerouting: Dynamic rerouting algorithms, like Open Shortest Path First (OSPF) or Border Gateway Protocol (BGP), can help reroute traffic in case of congestion.
+
+6. Monitoring Tools: Continuous monitoring of network performance to detect congestion before it becomes a problem. This might involve real-time traffic analysis and predictive modeling.
+
+7. Network Topology Considerations: 
+   - Mesh Topology: A mesh network helps in distributing traffic efficiently across different paths.
+   - Hierarchical Topology: Helps in organizing traffic more efficiently, especially in large networks.
+
+By combining these components, a network can better manage high-density traffic and reduce congestion.
+
+
+
+2.3	IP Addressing Scheme
+
+Here's how the IP addressing scheme fits into the topology to optimize traffic and reduce congestion:
+1.	Core Network (Routers & Load Balancers)
+o	IP Range: 10.0.0.0/24
+o	Core Routers: 10.0.0.1 to 10.0.0.2
+o	Load Balancers: 10.0.0.3 to 10.0.0.4
+o	Purpose: These IP addresses are assigned to the critical devices managing traffic between different subnets and ensuring load balancing and traffic routing.
+
+2.	Redundant Links for High Availability
+o	IP Range: 10.0.5.0/30
+o	Router-to-Router Link: 10.0.5.1 and 10.0.5.2
+o	Purpose: This subnet is used for the redundant links between core devices, allowing for automatic failover to maintain network availability and prevent congestion on single paths.
+
+3.	Distribution Layer (Switches)
+o	IP Range: 10.0.1.0/24
+o	Switches: 10.0.1.1 to 10.0.1.10
+o	Purpose: These switches aggregate traffic from the access layer, handle inter-VLAN routing, and can implement QoS to prioritize traffic efficiently.
+
+4.	Access Layer (End Devices)
+o	IP Range for Workstations: 10.1.0.0/24
+o	IP Range for Servers: 10.2.0.0/24
+o	Purpose: These subnets support workstations (10.1.0.x) and servers (10.2.0.x). Workstations typically have less time-sensitive traffic compared to servers, so they are placed in separate subnets for better management.
+
+5.	VLAN Segmentation for Traffic Isolation
+o	VLAN 10 (VoIP): 10.30.0.0/24
+o	VLAN 20 (Servers): 10.20.0.0/24
+o	VLAN 30 (Workstations): 10.40.0.0/24
+o	Purpose: Different VLANs segment network traffic to prevent congestion. For example, VoIP traffic can be isolated in VLAN 10 to guarantee low latency, while workstations are isolated in VLAN 30
+6.	Traffic Management Devices
+o	IP Range: 10.100.0.0/24
+o	Traffic Shapers & Monitoring Systems: 10.100.0.10 to 10.100.0.20
+o	Purpose: This range is used for traffic management devices such as QoS systems and network monitoring tools, ensuring that traffic congestion is monitored and dynamically optimized.
+
+7.	Management Network for Devices
+o	IP Range: 10.10.0.0/24
+o	Devices: 10.10.0.1 to 10.10.0.20
+o	Purpose: Devices like switches, routers, and firewalls used for network management are placed in a separate management subnet for easy access and control.
+
+8.	Public-Facing Services (if required)
+o	Public IP Range: 203.0.113.0/24
+o	Web Servers: 203.0.113.10, 203.0.113.20
+o	Purpose: Public IP addresses are assigned to external-facing devices such as web servers, ensuring that traffic can be managed and optimized for inbound and outbound communication.
+
+9.	Virtual IPs for Failover
+o	VIP for Routers and Load Balancers: 10.255.0.1 (for redundant systems)
+o	Purpose: Virtual IPs are used for high-availability scenarios, where the same IP is shared between redundant devices for seamless failover without affecting traffic flow.
